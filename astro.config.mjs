@@ -12,7 +12,7 @@ export default defineConfig({
       disable404Route: true,
       favicon: '/favicon.svg',
       editLink: {
-        baseUrl: 'https://github.com/namanthanki/chessdev.org/edit/main/',
+        baseUrl: 'https://github.com/namanthanki/chessdev/edit/main/',
       },
       components: {
         PageTitle: './src/components/ArticlePageTitle.astro',
