@@ -12,7 +12,7 @@ export default defineConfig({
       disable404Route: true,
       favicon: '/favicon.svg',
       editLink: {
-        baseUrl: 'https://github.com/chessdev-org/chessdev.org/edit/main/',
+        baseUrl: 'https://github.com/namanthanki/chessdev.org/edit/main/',
       },
       components: {
         PageTitle: './src/components/ArticlePageTitle.astro',
@@ -23,6 +23,7 @@ export default defineConfig({
           label: 'Start',
           items: [
             { label: 'Home', link: '/' },
+            { label: 'About', link: '/about/' },
             { label: 'Contribute', link: '/contribute/' },
           ],
         },
