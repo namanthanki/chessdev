@@ -1,0 +1,142 @@
+---
+const { entry } = Astro.locals.starlightRoute;
+const data = entry.data;
+const isArticle = data.pageType === 'article';
+const pageTitleId = '_top';
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('en', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    timeZone: 'UTC',
+  }).format(date);
+---
+
+<h1 id={pageTitleId}>{data.title}</h1>
+
+{
+  isArticle && (
+    <section class="review-box" aria-label="Article review metadata">
+      {data.summary && <p class="summary">{data.summary}</p>}
+      <dl>
+        <div>
+          <dt>Authors</dt>
+          <dd>{data.authors.join(', ')}</dd>
+        </div>
+        <div>
+          <dt>Reviewed by</dt>
+          <dd>{data.reviewedBy.join(', ')}</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>
+            <span class:list={['badge', data.verified ? 'verified' : 'unverified']}>
+              {data.verified ? 'verified' : 'unverified'}
+            </span>
+          </dd>
+        </div>
+        <div>
+          <dt>Last updated</dt>
+          <dd>{formatDate(data.lastUpdated)}</dd>
+        </div>
+        {
+          data.references.length > 0 && (
+            <div class="references">
+              <dt>References</dt>
+              <dd>
+                <ul>
+                  {data.references.map((reference: string, index: number) => (
+                    <li>
+                      <a href={reference}>Reference {index + 1}</a>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          )
+        }
+      </dl>
+    </section>
+  )
+}
+
+<style>
+  h1 {
+    margin-top: 1rem;
+    font-size: var(--sl-text-h1);
+    line-height: var(--sl-line-height-headings);
+    font-weight: 650;
+    color: var(--sl-color-white);
+  }
+
+  .review-box {
+    margin-top: 1rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+    border-bottom: 1px solid var(--sl-color-gray-5);
+    padding: 0.9rem 0;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+  }
+
+  .summary {
+    margin: 0 0 0.8rem;
+    color: var(--sl-color-gray-1);
+    font-size: var(--sl-text-base);
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 0.75rem 1.25rem;
+    margin: 0;
+  }
+
+  dl > div {
+    min-width: 0;
+  }
+
+  dt {
+    color: var(--sl-color-gray-3);
+    font-family: var(--sl-font-system-mono);
+    font-size: var(--sl-text-xs);
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0.15rem 0 0;
+  }
+
+  .badge {
+    display: inline-block;
+    border: 1px solid var(--sl-color-gray-5);
+    padding: 0.05rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: var(--sl-font-system-mono);
+    font-size: var(--sl-text-xs);
+    text-transform: uppercase;
+  }
+
+  .badge.verified {
+    border-color: var(--sl-color-green-high);
+    color: var(--sl-color-green-high);
+  }
+
+  .badge.unverified {
+    border-color: var(--sl-color-orange-high);
+    color: var(--sl-color-orange-high);
+  }
+
+  .references {
+    grid-column: 1 / -1;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

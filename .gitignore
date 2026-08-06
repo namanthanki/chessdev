@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build & generated files
+dist/
+.astro/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

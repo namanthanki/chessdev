@@ -1,0 +1,34 @@
+---
+title: "Contribute"
+description: "How to write and update articles on chessdev.org."
+pageType: "page"
+sidebar:
+  order: 2
+---
+
+All changes to chessdev.org are submitted as pull requests and reviewed by topic maintainers.
+
+## Before opening a PR
+
+1. Check `src/content/docs/` for existing topics.
+2. Update an existing page when possible instead of creating duplicates.
+3. Run and test all code snippets.
+4. Add checkable citations (papers, engine code, or benchmarks).
+
+## Frontmatter
+
+Every article must include `authors`, `reviewedBy`, `verified`, `topic`, and `lastUpdated`. Use real GitHub handles.
+
+If an LLM helped write your draft, state it in your PR description. You are responsible for verifying every claim.
+
+## What gets closed
+
+PRs are closed if they:
+- Use vague text with no tested code or specific facts.
+- Rewrite existing pages without adding new information or clearer explanations.
+- Make performance claims without benchmark data or source links.
+- Replace concise code with unnecessary text explanations.
+
+## Maintainers
+
+Maintainer status is given to contributors with merged articles or chess engine projects. See `MAINTAINERS.md` for the topic owner list.

@@ -1,0 +1,47 @@
+---
+title: "0x88 Board Representation"
+description: "How 0x88 stores board squares in a 128-entry array and checks off-board moves with a single bitwise AND."
+pageType: "article"
+summary: "A 128-entry array layout for fast off-board move checks using bitwise masking."
+topic: "board-representation"
+authors: ["your-github-handle"]
+reviewedBy: ["maintainer-handle"]
+verified: true
+references:
+  - "https://www.chessprogramming.org/0x88"
+lastUpdated: 2026-08-07
+draft: false
+sidebar:
+  order: 1
+---
+
+The 0x88 layout uses a 128-element array (16 ranks by 8 files, where only half represents the actual 8x8 board).
+
+In 0x88 square indexing:
+- Low 3 bits store the file (0–7).
+- High 4 bits store the rank (0–7).
+
+A square is off the board if bit 3 or bit 7 is set (`0x88` in hexadecimal, binary `10001000`).
+
+```c
+#define OFFBOARD(sq) ((sq) & 0x88)
+```
+
+## Move generation
+
+Ray-piece movement adds directional offsets to the square index until `OFFBOARD(sq)` returns true:
+
+```c
+static const int bishop_dirs[4] = { 15, 17, -15, -17 };
+
+for (int i = 0; i < 4; i++) {
+    for (int to = from + bishop_dirs[i]; !OFFBOARD(to); to += bishop_dirs[i]) {
+        /* check square content: empty, capture, or blocked */
+    }
+}
+```
+
+## Trade-offs
+
+- **Fast off-board check**: Requires only one bitwise AND operation (`sq & 0x88`).
+- **Index conversion**: 0x88 indices are not contiguous (0–119 with gaps), so converting to a standard 0–63 index requires a conversion step (`(sq + (sq & 7)) >> 1` or an lookup array).

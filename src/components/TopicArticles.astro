@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  topic: string;
+}
+
+const { topic } = Astro.props;
+const articles = (await getCollection('docs'))
+  .filter((entry) => entry.data.pageType === 'article' && entry.data.topic === topic)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+{
+  articles.length > 0 ? (
+    <ul class="article-list">
+      {articles.map((article) => (
+        <li>
+          <a href={`/${article.id}/`}>{article.data.title}</a>
+          <p>{article.data.summary}</p>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>No articles have landed here yet.</p>
+  )
+}
+
+<style>
+  .article-list {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .article-list li {
+    border-top: 1px solid var(--sl-color-gray-5);
+    padding-top: 0.85rem;
+  }
+
+  .article-list a {
+    font-family: var(--sl-font-system-mono);
+    font-size: var(--sl-text-lg);
+  }
+
+  .article-list p {
+    margin: 0.25rem 0 0;
+    color: var(--sl-color-gray-2);
+  }
+</style>

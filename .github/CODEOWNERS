@@ -1,0 +1,10 @@
+# Route PRs to the right reviewer automatically. Fill in real handles
+# as maintainers come on board. Until then this is a placeholder so
+# the mechanism is documented and ready to use.
+
+/src/content/docs/board-representation/  @maintainer-handle
+/src/content/docs/move-generation/       @maintainer-handle
+/src/content/docs/search/                @maintainer-handle
+/src/content/docs/evaluation/            @maintainer-handle
+/src/content/docs/endgames/              @maintainer-handle
+/src/content/docs/engines/               @maintainer-handle
