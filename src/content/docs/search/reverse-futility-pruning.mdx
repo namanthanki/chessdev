@@ -1,0 +1,40 @@
+---
+title: "Reverse Futility Pruning"
+description: "A strong and cheap pruning method that prunes whole nodes."
+pageType: "article"
+summary: "A pruning method in a principal variation search that prunes nodes statically evaluated to be above beta."
+topic: "search"
+authors: ["amberg12"]
+reviewedBy: ["maintainer-handle"]
+verified: false
+references:
+  - "https://github.com/Ciekce/Stormphrax/blob/2402cae156a11eb5433e07dd8ec8ed7a9d67b750/src/search.cpp#L838-L853"
+lastUpdated: 2026-08-07
+draft: false
+sidebar:
+  order: 1
+---
+
+Reverse futility pruning, also known as static null move pruning, is a pruning method that prunes nodes based on whether
+the static evaluation of the node beats beta by a sufficient margin. If so, we assume there exists at least one sequence
+of moves that will preserve enough score to remain above beta, meaning the node can be pruned.
+
+Such pruning methods are only sound in nodes that are not a PV node or in check. Furthermore, it is only applied in
+sufficiently shallow nodes in order to prevent mate finding.
+
+A basic implementation of reverse futility pruning is as follows:
+
+```c
+if (!is_pv && !in_check && static_eval - 128 * depth >= beta && depth <= 6) {
+  return static_eval;
+}
+```
+
+## Further improvements
+
+There are more terms that could be added to reverse futility pruning in order to gain further elo, including but not
+limited to:
+ - Reducing the margin in nodes where the static evaluation has been improving over previous plies.
+ - Using a quadratic function of depth rather than a linear one.
+ - Interpolating the static evaluation with beta.
+
