@@ -1,3 +1,6 @@
 name = "chessdev"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-08-07"
+
+[assets]
+directory = "./dist"
