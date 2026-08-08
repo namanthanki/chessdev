@@ -1,0 +1,63 @@
+---
+title: "Search progression"
+description: "How to progress from basic to advanced search?"
+pageType: "article"
+summary: List of search features to implement and possible implementation order
+topic: "search"
+authors: ["rodentbreeder"]
+reviewedBy: ["namanthanki"]
+verified: true
+references:
+  - "https://pastebin.com/AMhVEVaj"
+  - "https://chessprogramming.org/Search_Progression"
+lastUpdated: 2026-08-07
+draft: true
+sidebar:
+  order: 1
+---
+
+Furypasta is a search progression proposed by Aron Petkowski, author of Integral chess engine.
+
+## Furypasta
+
+**A reasonable search feature progression assuming you have the fundamentals i.e. negamax 
+and alpha/beta pruning (ideally in a fail-soft framework)**
+
+- Quiescent Search
+- Transposition Table
+- Basic Move Ordering (sorting TT move first, captures by MVV-LVA)
+- Iterative Deepening
+- PVS
+- RFP ([Reverse Futility Pruning](/search/reverse-futility-pruning/)))
+- NMP
+- LMR (log formula is most principled ~ there are a number of adjustments you can experiment with)
+- Butterfly history heuristic
+- Killer moves
+- LMP
+- Futility pruning
+- Internal Iterative Reduction (IIR)
+- Improving heuristic
+- QS SEE pruning
+- PVS SEE pruning (captures and quiets)
+- Continuation history (CMH + FMH etc..)
+- Capture history heuristic
+- History pruning
+- Singular extensions
+- Multicut (using singular search result)
+- Double/triple/negative extensions
+- Cutnode (as apart of negative extensions, LMR, etc)
+- Static eval correction history
+- QS futility pruning
+ 
+There are also **time management** adjustments that can be done at any point after adding iterative deepening. Ideally you have:
+1. Hard bound (applies to the entire search)
+2. Soft bound (checked on each new depth in the ID loop)
+ 
+For the soft bound the progression can go something like this
+- Node-based scaling
+- Best move stability
+- Eval stability
+ 
+Additionally, should be a healthy amount of parameter tweaking after each addition.
+There are other minor features that top engines have, but these will constitute the majority of the elo you will find in them.
+
